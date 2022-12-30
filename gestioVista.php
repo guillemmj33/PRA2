@@ -19,7 +19,12 @@ if ($conn->connect_error) {
 //fem comprovació de que la sèrie no existeix
 $query = mysqli_query($conn, "SELECT * FROM serie WHERE nom = '$nomSerie'");
 if(mysqli_num_rows($query) > 0){
-  echo "La sèrie que vols afegir ja existeix. Si us plau, escull una altra.";
+  echo '
+  <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
+    La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
+  </div>
+  <a href="novaSerie.html">Tornar</a>
+  ';
 } else {
   //afegim les dades d'una nova sèrie amb protecció contra inject attacks
   $sql = "INSERT INTO serie (nom, plataforma, temporadesPrevistes) 
@@ -35,7 +40,12 @@ if(mysqli_num_rows($query) > 0){
 
   mysqli_stmt_execute($stmt);
 
-  echo "La sèrie ha estat guardada correctament.";
+  echo '
+  <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
+    La sèrie ha estat guardada correctament.
+  </div>
+  <a href="novaSerie.html">Tornar</a>
+  ';
 }
 
 ?>
