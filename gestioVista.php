@@ -1,21 +1,12 @@
 <?php
 
+include('./taccesbd.php');
+
 $nomSerie = $_POST["nomSerie"];
 $plataformaSerie = $_POST["plataformaSerie"];
 $temporadesPrevistes = filter_input(INPUT_POST, "temporadesPrevistes", FILTER_VALIDATE_INT);
 
-//creem la connexió a la nostra base de dades
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "PRA2";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
-
+/*********************** NOVA SÈRIE HTML ***********************/
 //fem comprovació de que la sèrie no existeix
 $query = mysqli_query($conn, "SELECT * FROM serie WHERE nom = '$nomSerie'");
 if(mysqli_num_rows($query) > 0){
@@ -46,6 +37,19 @@ if(mysqli_num_rows($query) > 0){
   </div>
   <a href="novaSerie.html">Tornar</a>
   ';
+}
+
+/*********************** NOVA TEMPORADA HTML ***********************/
+$dadesSerie = $_POST["dadesSerie"];
+$numeroCapitols = filter_input(INPUT_POST, "numeroCapitols", FILTER_VALIDATE_INT);;
+
+$query = "SELECT nom, plataforma, qualificacio, temporadesPrevistes FROM serie";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+  while ($row = mysqli_fetch_assoc($result)) {
+    echo "<option>" . $rows["nom"] . "</option>";
+  }
 }
 
 ?>
