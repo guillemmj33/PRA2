@@ -1,16 +1,19 @@
 <?php
+//connectem a la nostra base de dades
+class DbConnect {
+  private $server = 'localhost';
+  private $dbname = 'PRA2';
+  private $user = 'root';
+  private $pass = 'root';
 
-//creem la connexió a la nostra base de dades
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "PRA2";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+  public function connect() {
+    try {
+      $conn = new PDO('mysql:host=' .$this->server .';dbname=' . $this->dbname, $this->user, $this->pass);
+      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      return $conn;
+    } catch (\Exception $e) {
+      echo "Database Error: " . $e->getMessage();
+    }
+  }   
 }
-
-// echo "Connected successfully";
 ?>

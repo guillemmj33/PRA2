@@ -1,55 +1,43 @@
 <?php
 
-include('./taccesbd.php');
+include './taccesbd.php';
 
-$nomSerie = $_POST["nomSerie"];
-$plataformaSerie = $_POST["plataformaSerie"];
-$temporadesPrevistes = filter_input(INPUT_POST, "temporadesPrevistes", FILTER_VALIDATE_INT);
+$objDB = new DbConnect;
+$conn = $objDB->connect();
 
 /*********************** NOVA SÈRIE HTML ***********************/
 //fem comprovació de que la sèrie no existeix
-$query = mysqli_query($conn, "SELECT * FROM serie WHERE nom = '$nomSerie'");
-if(mysqli_num_rows($query) > 0){
-  echo '
-  <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
-    La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
-  </div>
-  <a href="novaSerie.html">Tornar</a>
-  ';
-} else {
-  //afegim les dades d'una nova sèrie amb protecció contra inject attacks
-  $sql = "INSERT INTO serie (nom, plataforma, temporadesPrevistes) 
-  VALUES (?, ?, ?)";
+if (isset($_POST['form_submit'])) {
+  $nomSerie = $_POST["nomSerie"];
+  $plataformaSerie = $_POST["plataformaSerie"];
+  $temporadesPrevistes = filter_input(INPUT_POST, "temporadesPrevistes", FILTER_VALIDATE_INT);
 
-  $stmt = mysqli_stmt_init($conn);
-
-  if (!mysqli_stmt_prepare($stmt, $sql)){
-    die(mysqli_error($conn));
+  try {
+    $validation_query = $conn->prepare("SELECT * FROM serie WHERE nom = '$nomSerie'");
+    $validation_query->execute([$nomSerie]);
+    if ($validation_query->rowCount() > 0) {
+      echo '
+      <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
+        La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
+      </div>
+      <a href="novaSerie.html">Tornar</a>
+      ';
+    } else {
+      //Introduïm les dades amb protecció contra atacs 
+      $insert = $conn->prepare("INSERT INTO serie (nom, plataforma, temporadesPrevistes) VALUES (?, ?, ?)");
+      if($insert->execute([$nomSerie, $plataformaSerie, $temporadesPrevistes])){
+        echo '
+        <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
+          La sèrie ha estat guardada correctament.
+        </div>
+        <a href="novaSerie.html">Tornar</a>
+        ';
+      }
+    }
+  } catch (PDOException $e){
+    echo $e->getMessage();
   }
-
-  mysqli_stmt_bind_param($stmt, "ssi", $nomSerie, $plataformaSerie, $temporadesPrevistes);
-
-  mysqli_stmt_execute($stmt);
-
-  echo '
-  <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
-    La sèrie ha estat guardada correctament.
-  </div>
-  <a href="novaSerie.html">Tornar</a>
-  ';
 }
 
 /*********************** NOVA TEMPORADA HTML ***********************/
-$dadesSerie = $_POST["dadesSerie"];
-$numeroCapitols = filter_input(INPUT_POST, "numeroCapitols", FILTER_VALIDATE_INT);;
-
-$query = "SELECT nom, plataforma, qualificacio, temporadesPrevistes FROM serie";
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-  while ($row = mysqli_fetch_assoc($result)) {
-    echo "<option>" . $rows["nom"] . "</option>";
-  }
-}
-
 ?>
