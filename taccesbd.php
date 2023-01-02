@@ -25,9 +25,9 @@ class TAccesbd
     mysqli_set_charset($this->connexio,"utf8");
     if (!$this->connexio)
     {
-        $res = false;
-        die("No s'ha pogut realitzar la connexió. ERROR:" .
-        mysqli_connect_error());
+      $res = false;
+      die("No s'ha pogut realitzar la connexió. ERROR:" .
+      mysqli_connect_error());
     }
     return $res;
   }
@@ -36,7 +36,7 @@ class TAccesbd
   {
     if (isset($this->connexio))
     {
-        mysqli_close($this->connexio);
+      mysqli_close($this->connexio);
     }
   }
 

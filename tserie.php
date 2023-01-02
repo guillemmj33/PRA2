@@ -1,5 +1,5 @@
 <?php
-//Classe de MODEL encarregada de la gestió de la taula SERIE de la base de dades
+//Classe encarregada de la gestió de la taula SERIE de la base de dades
 include_once ("taccesbd.php");
 
 class Tserie
@@ -27,7 +27,29 @@ class Tserie
     }
   }
 
-  public function llistatSeries()
+  public function crearSerie()
+  {
+    echo "hola";
+    $res = false;
+    $nom = $_POST["nom"];
+    if ($this->abd->consulta_SQL("SELECT * FROM serie WHERE nom = '$nom'"))
+    {
+      echo "La serie sí existe";
+    }
+    return $res; 
+  }
+/* 
+    $sql = "INSERT INTO serie (nom, plataforma, temporadesPrevistes) VALUES (?, ?, ?)";
+    var_dump($sql);
+    mysqli_stmt_bind_param($mysqli, "ssi", $nomSerie, $plataformaSerie, $temporadesPrevistes);
+    if($mysqli->query($sql) === true){
+        echo "Records inserted successfully.";
+    } else{
+        echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
+    } */
+
+
+  /* public function llistatSeries()
   {
     $res = false;
     if ($this->abd->consulta_SQL("SELECT nom, plataforma, qualificacio, temporadesPrevistes FROM serie ORDER BY nom"))
@@ -53,6 +75,6 @@ class Tserie
       $res = "<select name='serie'></select><br>";
     }
     return $res; 
-  }
+  } */
 
 }

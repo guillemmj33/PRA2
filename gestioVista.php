@@ -1,44 +1,101 @@
 <?php
 header("Content-Type: text/html;charset=utf-8");
-include_once('./tcontrol.php');
+include_once("tcontrol.php");
 
-$nomSerie = $_POST["nomSerie"];
-$plataformaSerie = $_POST["plataformaSerie"];
-$temporadesPrevistes = filter_input(INPUT_POST, "temporadesPrevistes", FILTER_VALIDATE_INT);
+function mostrarError ($missatge)
+{
+	echo "<table bgcolor=grey align=center border = 1 cellpadding = 10>";
+	echo "<tr><td><br><h2> $missatge </h2><br><br></td></tr>";
+	echo "</table>";		
+};
 
-/*********************** NOVA SÈRIE HTML ***********************/
-//fem comprovació de que la sèrie no existeix
-$query = mysqli_query($conn, "SELECT * FROM serie WHERE nom = '$nomSerie'");
-if(mysqli_num_rows($query) > 0){
-  echo '
-  <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
-    La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
-  </div>
-  <a href="novaSerie.html">Tornar</a>
-  ';
-} else {
-  //afegim les dades d'una nova sèrie amb protecció contra inject attacks
-  $sql = "INSERT INTO serie (nom, plataforma, temporadesPrevistes) 
-  VALUES (?, ?, ?)";
+function mostrarMissatge ($missatge)
+{
+	echo "<table bgcolor=#ffffb7 align=center border = 1 cellpadding = 10>";
+	echo "<tr><td><br><h2> $missatge </h2><br><br></td></tr>";
+	echo "</table>";		
+};
 
-  $stmt = mysqli_stmt_init($conn);
+/* // Aquesta funció no està dintre del CASE de sota, per que no te un formulari al fitxer HTML per a passar cap dada.
+function volant()
+{
+	$c = new TControl(); 
+	$llistat = $c->volant();
+	return ($llistat);
+} */
 
-  if (!mysqli_stmt_prepare($stmt, $sql)){
-    die(mysqli_error($conn));
-  }
-
-  mysqli_stmt_bind_param($stmt, "ssi", $nomSerie, $plataformaSerie, $temporadesPrevistes);
-
-  mysqli_stmt_execute($stmt);
-
-  echo '
-  <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
-    La sèrie ha estat guardada correctament.
-  </div>
-  <a href="novaSerie.html">Tornar</a>
-  ';
+/************************** APARTAT B **************************/
+// Crear serie
+function crearSerie(){
+  $s = new TControl();
+  $res = $s->crearSerie();
+  return ($res);
 }
 
-/*********************** NOVA TEMPORADA HTML ***********************/
 
-?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// APARTAT D
+// Aquí van les opcions de menú que necessiten demanar a l'usuari alguna dada addicional 
+if (isset($_POST["serie"]))
+{
+	$serie = $_POST["serie"];
+	switch ($serie)
+	{
+		case "Llistat":
+		{
+			if (isset($_POST["aeroport"]))
+			{
+				$aeroport = $_POST["aeroport"];
+				$c = new TControl();
+				$res = $c->aterrats($aeroport);
+				if ($res)
+				{
+					echo ('<html>
+
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title> Llistat avions aterrats </title>
+					</head>
+					
+					<body>
+						<center>
+							<h1>LLISTAT D´AVIONS ATERRATS A  <br>'.$aeroport.' <br></h1>
+							<br> <br>');
+					echo ($res);
+					echo ('<br><a href="index.html"> Tornar </a></center></body></html>');
+				}
+				else
+				{
+					mostrarError("Error en generar la llista d'avions aterrats a $aeroport");
+				}
+			}
+			break;	
+		}
+	}
+}
+
+
+
+
+

@@ -4,7 +4,6 @@ header("Content-Type: text/html;charset=utf-8");
 include_once ("tserie.php");
 include_once ("ttemporada.php");
 
-
 class TControl
 {
 	private $servidor;
@@ -20,31 +19,20 @@ class TControl
 		$this->nom_bd = "PRA2";
 	}
 
-	////////////// Mètodes per a muntar llistes desplegables als fitxers HTML
-	public function llistatSerie()
+	// Crear Serie a Tcontrol
+	public function crearSerie()
 	{
-		$p = new Tserie("","",0,$this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);	
-		$res = $p->llistatSerie();
-		return $res;
+		$s = new Tserie($_POST["nom"],$_POST["plataforma"],$_POST["temporades"], $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
+		$res = $s->crearSerie();
+		return ($res);
 	}
-
-
 
 	////////// Mètodes per a realitzar les opcions de menú
-	public function volant ()
+	public function llistatTemporades ()
 	{
-		$ll = new TAvio ("","","","", $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
-		$res = $ll->llistatVolant();
+		$ll = new Ttemporada ("","","", $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
+		$res = $ll->llistatTemporades();
 		return $res;
 	}
-
-	public function aterrats ($aeroport)
-	{
-		$ll = new TAvio ("","","",$aeroport, $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
-		$res = $ll->llistatAterrats();
-		return $res;
-	}
-
-/////////////////////////////////////////
 
 }
