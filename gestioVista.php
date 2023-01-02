@@ -24,7 +24,10 @@ if (isset($_POST['form_submit'])) {
       ';
     } else {
       //Introduïm les dades amb protecció contra atacs 
-      $insert = $conn->prepare("INSERT INTO serie (nom, plataforma, temporadesPrevistes) VALUES (?, ?, ?)");
+      $insert = $conn->prepare("INSERT INTO serie (nom, plataforma, qualificacio, temporadesPrevistes) VALUES (:nom, :plataformaSerie, :temporadesPrevistes)");
+      $insert->bindValue( ":nom", $nomSerie);
+      $insert->bindValue( ":plataforma", $plataformaSerie);
+      $insert->bindValue( ":temporadesPrevistes", $temporadesPrevistes);
       if($insert->execute([$nomSerie, $plataformaSerie, $temporadesPrevistes])){
         echo '
         <div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
@@ -37,6 +40,7 @@ if (isset($_POST['form_submit'])) {
   } catch (PDOException $e){
     echo $e->getMessage();
   }
+  $conn = null;
 }
 
 /*********************** NOVA TEMPORADA HTML ***********************/
