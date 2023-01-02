@@ -16,20 +16,27 @@ function mostrarMissatge ($missatge)
 	echo "</table>";		
 };
 
-/* // Aquesta funció no està dintre del CASE de sota, per que no te un formulari al fitxer HTML per a passar cap dada.
-function volant()
-{
-	$c = new TControl(); 
-	$llistat = $c->volant();
-	return ($llistat);
-} */
-
 /************************** APARTAT B **************************/
-// Crear serie
-function crearSerie(){
-  $s = new TControl();
-  $res = $s->crearSerie();
-  return ($res);
+class TGestioVista
+{
+	private $nom;
+	private $plataforma;
+	private $qualificacio;
+	private $temporadesPrevistes;
+	
+	function __construct($v_nom, $v_plataforma, $v_qualificacio, $v_temporadesPrevistes)
+	{
+		$this->nom = $v_nom;
+		$this->plataforma = $v_plataforma;
+		$this->qualificacio = $v_qualificacio;
+		$this->temporadesPrevistes = $v_temporadesPrevistes;
+	}
+	public function crearSerie()
+	{
+		$c = new TControl();
+		$res = $c->crearSerie($this->nom, $this->plataforma, $this->qualificacio, $this->temporadesPrevistes);
+		return $res;
+	}
 }
 
 

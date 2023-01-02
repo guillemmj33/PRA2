@@ -19,20 +19,18 @@ class TControl
 		$this->nom_bd = "PRA2";
 	}
 
-	// Crear Serie a Tcontrol
-	public function crearSerie()
+	public function crearSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes)
 	{
-		$s = new Tserie($_POST["nom"],$_POST["plataforma"],$_POST["temporades"], $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
-		$res = $s->crearSerie();
-		return ($res);
-	}
-
-	////////// Mètodes per a realitzar les opcions de menú
-	public function llistatTemporades ()
-	{
-		$ll = new Ttemporada ("","","", $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
-		$res = $ll->llistatTemporades();
+		$e = new Tserie(
+			$nom,
+			$plataforma,
+			$qualificacio,
+			$temporadesPrevistes, $this->servidor,
+				$this->usuari, $this->paraula_pas,
+				$this->nom_bd
+		);
+		$res = $e->crearSerie();
 		return $res;
 	}
-
+	
 }

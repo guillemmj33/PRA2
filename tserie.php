@@ -6,14 +6,16 @@ class Tserie
 {
   private $nom;
   private $plataforma;
-  private $temporades;
+  private $qualificacio;
+  private $temporadesPrevistes;
   private $abd;
 
-  function __construct($v_nom, $v_plataforma, $v_temporades, $servidor, $usuari, $paraula_pas, $nom_bd)
+  function __construct($v_nom, $v_plataforma, $v_qualificacio, $v_temporadesPrevistes, $servidor, $usuari, $paraula_pas, $nom_bd)
   {
     $this->nom = $v_nom;
     $this->plataforma = $v_plataforma;
-    $this->temporades = $v_temporades;
+    $this->qualificacio = $v_qualificacio;
+    $this->temporadesPrevistes = $v_temporadesPrevistes;
     $var_abd = new TAccesbd($servidor,$usuari,$paraula_pas,$nom_bd);
     $this->abd = $var_abd;
     $this->abd->connectar_BD();
@@ -27,54 +29,39 @@ class Tserie
     }
   }
 
+  public function existeix_serie()
+  {
+    $res = false;
+    if (
+      $this->abd->consulta_SQL("
+    select count(*) as quants
+    from estudiant
+    where nom = '" .
+        $this->abd->escapar_dada($this->nom) . "'")
+    ) {
+      if ($this->abd->consulta_fila()) {
+        $res = ($this->abd->consulta_dada('quants') > 0);
+      }
+    }
+    return $res;
+  }
+
   public function crearSerie()
   {
-    echo "hola";
     $res = false;
-    $nom = $_POST["nom"];
-    if ($this->abd->consulta_SQL("SELECT * FROM serie WHERE nom = '$nom'"))
-    {
-      echo "La serie sí existe";
-    }
-    return $res; 
-  }
-/* 
-    $sql = "INSERT INTO serie (nom, plataforma, temporadesPrevistes) VALUES (?, ?, ?)";
-    var_dump($sql);
-    mysqli_stmt_bind_param($mysqli, "ssi", $nomSerie, $plataformaSerie, $temporadesPrevistes);
-    if($mysqli->query($sql) === true){
-        echo "Records inserted successfully.";
-    } else{
-        echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
-    } */
-
-
-  /* public function llistatSeries()
-  {
-    $res = false;
-    if ($this->abd->consulta_SQL("SELECT nom, plataforma, qualificacio, temporadesPrevistes FROM serie ORDER BY nom"))
-    {   
-      $fila = $this->abd->consulta_fila();
-      $res =  "<select name='serie'>";
-      while ($fila != null)
-      {
-        $nom = $this->abd->consulta_dada('nom');
-        $plataforma = $this->abd->consulta_dada('plataforma');
-        $qualificacio = $this->abd->consulta_dada('qualificacio');
-        $temporadesPrevistes = $this->abd->consulta_dada('temporadesPrevistes');
-                    
-        $res = $res . "<option value='" . $fila["nom"] . " - " . $fila["plataforma"] . " - " . $fila["qualificacio"] . " - " . $fila["temporadesPrevistes"] . "</option>";
-        
-        $fila = $this->abd->consulta_fila();
+    //es comprova que la sèrie no està ja a la base de dades
+    if (!($this->existeix_serie())) { //si efectivament no hi és, s'insereix
+      if (
+        $this->abd->consulta_SQL("insert into estudiant
+   values ('" .
+          $this->abd->escapar_dada($this->nom) . "','" .
+          $this->abd->escapar_dada($this->plataforma) . "'," .
+          $this->abd->escapar_dada($this->qualificacio) . "'," .
+          $this->abd->escapar_dada($this->temporadesPrevistes) . ")")
+      ) {
+        $res = true;
       }
-      $res = $res . "</select><br>";
-      $this->abd->tancar_consulta();
     }
-    else
-    {
-      $res = "<select name='serie'></select><br>";
-    }
-    return $res; 
-  } */
-
+    return $res;
+  }
 }

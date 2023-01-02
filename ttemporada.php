@@ -4,16 +4,18 @@ include_once ("taccesbd.php");
 
 class Ttemporada
 {
-  private $nom;
-  private $plataforma;
-  private $temporades;
+  private $temporada;
+  private $nomSerie;
+  private $quantitatCapitols;
+  private $qualificacio;
   private $abd;
 
-  function __construct($v_nom, $v_plataforma, $v_temporades, $servidor, $usuari, $paraula_pas, $nom_bd)
+  function __construct($v_temporada, $v_nomSerie, $v_quantitatCapitols, $v_qualificacio, $servidor, $usuari, $paraula_pas, $nom_bd)
   {
-    $this->nom = $v_nom;
-    $this->plataforma = $v_plataforma;
-    $this->temporades = $v_temporades;
+    $this->temporada = $v_temporada;
+    $this->nomSerie = $v_nomSerie;
+    $this->quantitatCapitols = $v_quantitatCapitols;
+    $this->qualificacio = $v_qualificacio;
     $var_abd = new TAccesbd($servidor,$usuari,$paraula_pas,$nom_bd);
     $this->abd = $var_abd;
     $this->abd->connectar_BD();
@@ -26,33 +28,4 @@ class Ttemporada
     unset($this->abd);
     }
   }
-
-  public function llistatTemporades()
-  {
-    $res = false;
-    if ($this->abd->consulta_SQL("SELECT nom, plataforma, qualificacio, temporadesPrevistes FROM serie ORDER BY nom"))
-    {   
-      $fila = $this->abd->consulta_fila();
-      $res =  "<select name='serie'>";
-      while ($fila != null)
-      {
-        $nom = $this->abd->consulta_dada('nom');
-        $plataforma = $this->abd->consulta_dada('plataforma');
-        $qualificacio = $this->abd->consulta_dada('qualificacio');
-        $temporadesPrevistes = $this->abd->consulta_dada('temporadesPrevistes');
-                    
-        $res = $res . "<option value='" . $fila["nom"] . " - " . $fila["plataforma"] . " - " . $fila["qualificacio"] . " - " . $fila["temporadesPrevistes"] . "</option>";
-        
-        $fila = $this->abd->consulta_fila();
-      }
-      $res = $res . "</select><br>";
-      $this->abd->tancar_consulta();
-    }
-    else
-    {
-      $res = "<select name='serie'></select><br>";
-    }
-    return $res; 
-  }
-
 }
