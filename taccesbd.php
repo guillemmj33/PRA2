@@ -1,4 +1,5 @@
 <?php
+
 //connectem a la nostra base de dades
 class DbConnect {
   private $server = 'localhost';

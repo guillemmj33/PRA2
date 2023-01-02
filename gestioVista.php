@@ -11,8 +11,6 @@ if (isset($_POST['form_submit'])) {
   $plataformaSerie = $_POST["plataformaSerie"];
   $temporadesPrevistes = $_POST["temporadesPrevistes"];
 
-  echo $nomSerie, $plataformaSerie, $temporadesPrevistes;
-
   try {
     //fem comprovació de que la sèrie no existeix
     $validation_query = $conn->prepare("SELECT * FROM serie WHERE nom = '$nomSerie'");
@@ -26,7 +24,7 @@ if (isset($_POST['form_submit'])) {
       ';
     } else {
       //Introduïm les dades amb protecció contra atacs 
-      $insert = $conn->prepare("INSERT INTO serie (nom, plataforma, qualificacio, temporadesPrevistes) VALUES (:nomSerie, :plataformaSerie, null, :temporadesPrevistes)");
+      $insert = $conn->prepare("INSERT INTO serie (nom, plataforma, temporadesPrevistes) VALUES (:nomSerie, :plataformaSerie, :temporadesPrevistes)");
       $insert->bindValue(":nomSerie", $nomSerie);
       $insert->bindValue(":plataformaSerie", $plataformaSerie);
       $insert->bindValue(":temporadesPrevistes", $temporadesPrevistes);
