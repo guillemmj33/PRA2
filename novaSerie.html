@@ -20,9 +20,9 @@
   </p>
   <form action="gestioVista.php" method="post">
     <label for="nomSerie">Nom de la sèrie:</label>
-    <input type="text" id="nomSerie" name="nom" required><br>
+    <input type="text" name="nom" required><br>
     <label for="plataforma">Plataforma:</label>
-    <select name="plataforma" required="">
+    <select name="plataforma" required>
       <option value="Netflix" selected>Netflix</option>
       <option value="Amazon Prime">Amazon Prime</option>
       <option value="Disney">Disney+</option>
@@ -31,7 +31,7 @@
     <br>
     <br>
     <label for="dadesSerie">Temporades previstes (1-100)</label>
-    <input type="number" name="temporades" min="1" max="100" required>
+    <input type="number" name="temporadesPrevistes" min="1" max="100" required>
     <br>
     <br>
     <input type="submit" value="Nova sèrie">

@@ -35,7 +35,7 @@ class Tserie
     if (
       $this->abd->consulta_SQL("
     select count(*) as quants
-    from estudiant
+    from serie
     where nom = '" .
         $this->abd->escapar_dada($this->nom) . "'")
     ) {
@@ -52,7 +52,7 @@ class Tserie
     //es comprova que la sèrie no està ja a la base de dades
     if (!($this->existeix_serie())) { //si efectivament no hi és, s'insereix
       if (
-        $this->abd->consulta_SQL("insert into estudiant
+        $this->abd->consulta_SQL("insert into serie
    values ('" .
           $this->abd->escapar_dada($this->nom) . "','" .
           $this->abd->escapar_dada($this->plataforma) . "'," .

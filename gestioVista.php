@@ -31,6 +31,7 @@ class TGestioVista
 		$this->qualificacio = $v_qualificacio;
 		$this->temporadesPrevistes = $v_temporadesPrevistes;
 	}
+	
 	public function crearSerie()
 	{
 		$c = new TControl();
