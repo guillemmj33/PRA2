@@ -1,6 +1,6 @@
 <?php
-
-include('./taccesbd.php');
+header("Content-Type: text/html;charset=utf-8");
+include_once('./tcontrol.php');
 
 $nomSerie = $_POST["nomSerie"];
 $plataformaSerie = $_POST["plataformaSerie"];
@@ -40,16 +40,5 @@ if(mysqli_num_rows($query) > 0){
 }
 
 /*********************** NOVA TEMPORADA HTML ***********************/
-$dadesSerie = $_POST["dadesSerie"];
-$numeroCapitols = filter_input(INPUT_POST, "numeroCapitols", FILTER_VALIDATE_INT);;
-
-$query = "SELECT nom, plataforma, qualificacio, temporadesPrevistes FROM serie";
-$result = mysqli_query($conn, $sql);
-
-if (mysqli_num_rows($result) > 0) {
-  while ($row = mysqli_fetch_assoc($result)) {
-    echo "<option>" . $rows["nom"] . "</option>";
-  }
-}
 
 ?>

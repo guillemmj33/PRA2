@@ -18,11 +18,11 @@
     <br>
     La quantitat de temporades prevista és un número del 1 al 100 inclosos.
   </p>
-  <form class="novaSerie-form" action="gestioVista.php" method="post">
+  <form action="gestioVista.php" method="post">
     <label for="nomSerie">Nom de la sèrie:</label>
-    <input type="text" id="nomSerie" name="nomSerie" required><br>
+    <input type="text" id="nomSerie" name="nom" required><br>
     <label for="plataforma">Plataforma:</label>
-    <select id="plataforma" name="plataformaSerie" required="">
+    <select name="plataforma" required="">
       <option value="Netflix" selected>Netflix</option>
       <option value="Amazon Prime">Amazon Prime</option>
       <option value="Disney">Disney+</option>
@@ -31,12 +31,12 @@
     <br>
     <br>
     <label for="dadesSerie">Temporades previstes (1-100)</label>
-    <input type="number" id="dadesSerie" name="temporadesPrevistes" min="1" max="100" required>
+    <input type="number" name="temporadesPrevistes" min="1" max="100" required>
     <br>
     <br>
     <input type="submit" value="Nova sèrie">
   </form>
   <br>
-  <a href="/index.html">Torna al menú principal</a>
+  <a href="index.html">Torna al menú principal</a>
 </body>
 </html>

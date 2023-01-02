@@ -12,14 +12,10 @@
     <h1><strong>GESTIÓ DE SÈRIES DE TELEVISIÓ</strong></h1>
     <h2>Tria la teva opció</h2>
     <form action="opcioUsuari.php" method="post">
-      <input type="radio" id="novaSerie" name="serie" value="novaSerie"checked>
-      <label for="novaSerie">Nova sèrie</label><br>
-      <input type="radio" id="novaTemporada" name="serie" value="novaTemporada">
-      <label for="novaTemporada">Nova temporada</label><br>
-      <input type="radio" id="qualificarTemporada" name="serie" value="qualificarTemporada">
-      <label for="qualificarTemporada">Qualificar una temporada</label><br>
-      <input type="radio" id="dadesSerie" name="serie" value="dadesSerie">
-      <label for="dadesSerie">Dades d'una sèrie</label><br>
+      <input type="radio" checked="checked" name="serie" value="novaSerie"> Nova sèrie<br>
+      <input type="radio" name="serie" value="novaTemporada"> Nova temporada<br>
+      <input type="radio" name="serie" value="qualificarTemporada"> Qualificar una sèrie<br>
+      <input type="radio" name="serie" value="dadesSerie"> Dades d'una sèrie<br>
       <input type="submit" value="Tria una opció">
     </form>
   </main>
