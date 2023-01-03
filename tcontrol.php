@@ -55,4 +55,12 @@ class TControl
 		$res = $e->crearTemporada();
 		return $res;
 	}
+
+	/******************** APARTAT E ********************/
+	public function dadesSerie ()
+	{
+		$ll = new Tserie ("","",0, 0, $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
+		$res = $ll->llistatDadesSerie();
+		return $res;
+	}
 }

@@ -64,4 +64,33 @@ class Tserie
     }
     return $res;
   }
+
+  public function llistatDadesSerie()
+  {
+    $res = false;
+    if ($this->abd->consulta_SQL("select temporada, nomSerie, quantitatCapitols, qualificacio from temporada order by temporada")) {
+      $fila = $this->abd->consulta_fila();
+      $res = "<table border=1><tr bgcolor='lightgreen'>
+                        <th>Temporada</th><th>Capítols</th><th>Qualificació</th>
+                    </tr> ";
+      while ($fila != null) {
+        $temporada = $this->abd->consulta_dada('temporada');
+        $nomSerie = $this->abd->consulta_dada('nomSerie');
+        $quantitatCapitols = $this->abd->consulta_dada('quantitatCapitols');
+        $qualificacio = $this->abd->consulta_dada('qualificacio');
+
+        $res = $res . "<tr>";
+        $res = $res . "<td>$temporada</td>";
+        $res = $res . "<td>$quantitatCapitols</td>";
+        $res = $res . "<td align='right'>$qualificacio</td>";
+        $res = $res . "</tr>";
+        $fila = $this->abd->consulta_fila();
+      }
+      $res = $res . "</table>";
+      $this->abd->tancar_consulta();
+    } else {
+      $res = "<h2>Temporades de la sèrie " . $this->nom . " de " . $this->plataforma . " sense qualificar encara amb un total de " . $this->temporadesPrevistes . " temporades previstes"  . "</h2>";
+    }
+    return $res;
+  }
 }

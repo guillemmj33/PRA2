@@ -18,6 +18,10 @@ if (isset($_POST["opcio"]))
 				$res = $c->crearSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes);
 				if ($res) {
 					echo '
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title>Nova Sèrie</title>
+					</head>
 					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
 						La sèrie ha estat guardada correctament.
 					</div>
@@ -27,6 +31,10 @@ if (isset($_POST["opcio"]))
 				';
 				} else {
 					echo '
+						<head>
+							<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+							<title>Nova Sèrie</title>
+						</head>
 						<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
 							La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
 						</div>
@@ -49,6 +57,10 @@ if (isset($_POST["opcio"]))
 				$res = $c->crearTemporada($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
 				if ($res) {
 					echo '
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title>Nova Temporada</title>
+					</head>
 					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
 						La temporada ha estat guardada correctament.
 					</div>
@@ -58,6 +70,10 @@ if (isset($_POST["opcio"]))
 				';
 				} else {
 					echo '
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title>Nova Temporada</title>
+					</head>
 					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
 						La temporada que vols afegir ja existeix. Si us plau, escull una altra.
 					</div>
@@ -71,7 +87,7 @@ if (isset($_POST["opcio"]))
 		}
 		
 		case "Qualificar": {
-			if (isset($_POST["temporades"])) {
+			if (isset($_POST["qualificar"])) {
 				$temporada = $_POST["temporada"];
 				$nomSerie = $_POST["nomSerie"];
 				$quantitatCapitols = $_POST["quantitatCapitols"];
@@ -80,6 +96,10 @@ if (isset($_POST["opcio"]))
 				$res = $c->crearTemporada($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
 				if ($res) {
 					echo '
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title>Qualificar</title>
+					</head>
 					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
 						La temporada ha estat guardada correctament.
 					</div>
@@ -89,6 +109,10 @@ if (isset($_POST["opcio"]))
 				';
 				} else {
 					echo '
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title>Qualificar</title>
+					</head>
 					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
 						La temporada que vols afegir ja existeix. Si us plau, escull una altra.
 					</div>
@@ -101,27 +125,37 @@ if (isset($_POST["opcio"]))
 			}
 		}
 
-		case "Dades Sèrie": {
-			if (isset($_POST["series"])) {
-				$nom = $_POST["nom"];
+		case "Mostrar": {
+			if (isset($_POST["dadesSerie"])) {
+				$temporada = $_POST["temporada"];
 				$plataforma = $_POST["plataforma"];
-				$qualificacio = $_POST["qualificacio"];
+				$nomSerie = $_POST["nomSerie"];
 				$temporadesPrevistes = $_POST["temporadesPrevistes"];
+				$quantitatCapitols = $_POST["quantitatCapitols"];
+				$qualificacio = $_POST["qualificacio"];
 				$c = new TControl();
-				$res = $c->crearSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes);
+				$res = $c->dadesSerie($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
 				if ($res) {
-					echo '
-					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
-						La sèrie ha estat guardada correctament.
-					</div>
-					<br>
-					<br>
-					<center><a href="index.html">Tornar al menú principal</a></center>
-				';
+					echo ('<html>
+					
+					<head>
+						<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						<title>Dades Sèrie</title>
+					</head>
+					
+					<body>
+						<center>
+							<h1>Temporades de la sèrie '.$nomSerie.' de '.$plataforma.'<br>amb una qualificació de '.$qualificacio.'<br>amb un total de '.$temporadesPrevistes.' temporades previstes<br></h1>
+							<br>
+							');
+							
+					echo ($res);
+					echo ('<br><br><a href="index.html"> Tornar al menú principal </a></center></body></html>');
+					
 				} else {
 					echo '
 						<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
-							La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
+							Error en generar la llista de dades de la sèrie.
 						</div>
 						<br>
 						<br>
@@ -132,8 +166,6 @@ if (isset($_POST["opcio"]))
 			}
 		}
 	}
-
-	
 }
 
 
