@@ -1,5 +1,5 @@
 <?php
-//Classe encarregada de la gestió de la taula TEMPORADA de la base de dades
+//Classe MODEL encarregada de la gestió de la taula TEMPORADA de la base de dades
 include_once ("taccesbd.php");
 
 class Ttemporada

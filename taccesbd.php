@@ -20,7 +20,7 @@ class TAccesbd
   public function connectar_BD()
   {
     $res = true;
-    $this->connexio = mysqli_connect ($this->host, $this->user,
+    $this->connexio = @mysqli_connect ($this->host, $this->user,
     $this->pass, $this->bd);
     mysqli_set_charset($this->connexio,"utf8");
     if (!$this->connexio)

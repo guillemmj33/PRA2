@@ -32,5 +32,4 @@ class TControl
 		$res = $e->crearSerie();
 		return $res;
 	}
-	
 }

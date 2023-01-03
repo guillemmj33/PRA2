@@ -1,5 +1,5 @@
 <?php
-//Classe encarregada de la gestió de la taula SERIE de la base de dades
+//Classe MODEL encarregada de la gestió de la taula SERIE de la base de dades
 include_once ("taccesbd.php");
 
 class Tserie
@@ -52,11 +52,11 @@ class Tserie
     //es comprova que la sèrie no està ja a la base de dades
     if (!($this->existeix_serie())) { //si efectivament no hi és, s'insereix
       if (
-        $this->abd->consulta_SQL("insert into serie
-   values ('" .
+        $this->abd->consulta_SQL("INSERT INTO serie
+   VALUES ('" .
           $this->abd->escapar_dada($this->nom) . "','" .
           $this->abd->escapar_dada($this->plataforma) . "'," .
-          $this->abd->escapar_dada($this->qualificacio) . "'," .
+          $this->abd->escapar_dada($this->qualificacio) . "," .
           $this->abd->escapar_dada($this->temporadesPrevistes) . ")")
       ) {
         $res = true;
