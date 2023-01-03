@@ -8,36 +8,43 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1><strong>QUALIFICAR UNA TEMPORADA</strong></h1>
-  <p>
-    Per qualificar una temporada d'una sèrie, tria primer la sèrie de la llista.
+  <center>
+    <h1><strong>QUALIFICAR UNA TEMPORADA</strong></h1>
+    <p>
+      Per qualificar una temporada d'una sèrie, tria primer la sèrie de la llista.
+      <br>
+      Després, introdueix el número de la temporada que vols qualificar.
+      <br>
+      Finalment, qualifica del 1 al 5 la temporada.
+    </p>
+    <form class="qualificar-form" action="gestioVista.php" method="post">
+      <table>
+        <tr>
+            <td>Nom de la sèrie: </td>
+            <td>
+              <?php
+                include_once("tcontrol.php");
+                $c = new TControl();
+                $res = $c->llistatSeries(); 
+                echo ($res);
+              ?>
+            </td>
+        </tr>
+      </table>
+      <br>
+      <br>
+      <label for="numeroTemporada">Número de temporada:</label>
+      <input type="number" name="numeroTemporada" min="1" max="100"required>
+      <br>
+      <br>
+      <label for="qualificacio">Qualificació (1-5):</label>
+      <input type="number" name="qualificacio" min="1" max="5" required>
+      <br>
+      <br>
+      <input type="submit" name="opcio" value="Qualificar">
+    </form>
     <br>
-    Després, introdueix el número de la temporada que vols qualificar.
-    <br>
-    Finalment, qualifica del 1 al 5 la temporada.
-  </p>
-  <form class="qualificar-form" action="gestioVista.php" method="post">
-    <label for="nomSerie">Nom de la sèrie:</label>
-    <!-- aquí s'ha de connectar amb la nostra base de dades -->
-    <select id="plataforma" name="serie" form="plataformaForm">
-      <option value="netflix">Netflix</option>
-      <option value="amazonPrime">Amazon Prime</option>
-      <option value="disney">Disney+</option>
-      <option value="hbo">HBO</option>
-    </select>
-    <br>
-    <br>
-    <label for="numeroTemporada">Número de temporada:</label>
-    <input type="number" id="dadesSerie" name="serie" min="1" max="100"required>
-    <br>
-    <br>
-    <label for="qualificacio">Qualificació (1-5):</label>
-    <input type="number" id="dadesSerie" name="serie" min="1" max="5" required>
-    <br>
-    <br>
-    <input type="submit" value="Qualificar">
-  </form>
-  <br>
-  <a href="index.html">Torna al menú principal</a>
+    <a href="index.html">Torna al menú principal</a>
+  </center>
 </body>
 </html>

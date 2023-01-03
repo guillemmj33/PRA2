@@ -19,6 +19,7 @@ class TControl
 		$this->nom_bd = "PRA2";
 	}
 
+	/******************** APARTAT B ********************/
 	public function crearSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes)
 	{
 		$e = new Tserie(
@@ -30,6 +31,28 @@ class TControl
 				$this->nom_bd
 		);
 		$res = $e->crearSerie();
+		return $res;
+	}
+
+	/******************** APARTAT C ********************/
+	public function llistatSeries()
+	{
+		$p = new Ttemporada("","",0,0,$this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);	
+		$res = $p->llistatSeries();
+		return $res;
+	}
+
+	public function crearTemporada($temporada, $nomSerie, $quantitatCapitols, $qualificacio)
+	{
+		$e = new Ttemporada(
+			$temporada,
+			$nomSerie,
+			$quantitatCapitols,
+			$qualificacio, $this->servidor,
+				$this->usuari, $this->paraula_pas,
+				$this->nom_bd
+		);
+		$res = $e->crearTemporada();
 		return $res;
 	}
 }

@@ -3,61 +3,140 @@ header("Content-Type: text/html;charset=utf-8");
 
 include_once("tcontrol.php");
 
-function mostrarError ($missatge)
+if (isset($_POST["opcio"]))
 {
-	echo "<table bgcolor=grey align=center border = 1 cellpadding = 10>";
-	echo "<tr><td><br><h2> $missatge </h2><br><br></td></tr>";
-	echo "</table>";		
-};
-
-function mostrarMissatge ($missatge)
-{
-	echo "<table bgcolor=#ffffb7 align=center border = 1 cellpadding = 10>";
-	echo "<tr><td><br><h2> $missatge </h2><br><br></td></tr>";
-	echo "</table>";		
-};
-
-/************************** APARTAT B **************************/
-class TGestioVista
-{
-	private $nom;
-	private $plataforma;
-	private $qualificacio;
-	private $temporadesPrevistes;
-
-	function __construct($v_nom, $v_plataforma, $v_qualificacio, $v_temporadesPrevistes)
+	$opcio = $_POST["opcio"];
+	switch ($opcio)
 	{
-		$this->nom = $v_nom;
-		$this->plataforma = $v_plataforma;
-		$this->qualificacio = $v_qualificacio;
-		$this->temporadesPrevistes = $v_temporadesPrevistes;
+		case "Nova Sèrie": {
+			if (isset($_POST["series"])) {
+				$nom = $_POST["nom"];
+				$plataforma = $_POST["plataforma"];
+				$qualificacio = $_POST["qualificacio"];
+				$temporadesPrevistes = $_POST["temporadesPrevistes"];
+				$c = new TControl();
+				$res = $c->crearSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes);
+				if ($res) {
+					echo '
+					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
+						La sèrie ha estat guardada correctament.
+					</div>
+					<br>
+					<br>
+					<center><a href="index.html">Tornar al menú principal</a></center>
+				';
+				} else {
+					echo '
+						<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
+							La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
+						</div>
+						<br>
+						<br>
+						<center><a href="index.html">Tornar al menú principal</a></center>
+					';
+				}
+				break;
+			}
+		}
+
+		case "Nova Temporada": {
+			if (isset($_POST["temporades"])) {
+				$temporada = $_POST["temporada"];
+				$nomSerie = $_POST["nomSerie"];
+				$quantitatCapitols = $_POST["quantitatCapitols"];
+				$qualificacio = $_POST["qualificacio"];
+				$c = new TControl();
+				$res = $c->crearTemporada($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
+				if ($res) {
+					echo '
+					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
+						La temporada ha estat guardada correctament.
+					</div>
+					<br>
+					<br>
+					<center><a href="index.html">Tornar al menú principal</a></center>
+				';
+				} else {
+					echo '
+					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
+						La temporada que vols afegir ja existeix. Si us plau, escull una altra.
+					</div>
+					<br>
+					<br>
+					<center><a href="index.html">Tornar al menú principal</a></center>
+				';
+				}
+				break;
+			}
+		}
+		
+		case "Qualificar": {
+			if (isset($_POST["temporades"])) {
+				$temporada = $_POST["temporada"];
+				$nomSerie = $_POST["nomSerie"];
+				$quantitatCapitols = $_POST["quantitatCapitols"];
+				$qualificacio = $_POST["qualificacio"];
+				$c = new TControl();
+				$res = $c->crearTemporada($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
+				if ($res) {
+					echo '
+					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
+						La temporada ha estat guardada correctament.
+					</div>
+					<br>
+					<br>
+					<center><a href="index.html">Tornar al menú principal</a></center>
+				';
+				} else {
+					echo '
+					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
+						La temporada que vols afegir ja existeix. Si us plau, escull una altra.
+					</div>
+					<br>
+					<br>
+					<center><a href="index.html">Tornar al menú principal</a></center>
+				';
+				}
+				break;
+			}
+		}
+
+		case "Dades Sèrie": {
+			if (isset($_POST["series"])) {
+				$nom = $_POST["nom"];
+				$plataforma = $_POST["plataforma"];
+				$qualificacio = $_POST["qualificacio"];
+				$temporadesPrevistes = $_POST["temporadesPrevistes"];
+				$c = new TControl();
+				$res = $c->crearSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes);
+				if ($res) {
+					echo '
+					<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
+						La sèrie ha estat guardada correctament.
+					</div>
+					<br>
+					<br>
+					<center><a href="index.html">Tornar al menú principal</a></center>
+				';
+				} else {
+					echo '
+						<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
+							La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
+						</div>
+						<br>
+						<br>
+						<center><a href="index.html">Tornar al menú principal</a></center>
+					';
+				}
+				break;
+			}
+		}
 	}
 
-	public function crearSerie()
-	{
-		$c = new TControl();
-		$res = $c->crearSerie($this->nom, $this->plataforma, $this->qualificacio, $this->temporadesPrevistes);
-		return $res;
-	}
+	
 }
 
-$g_e = new TGestioVista($_POST['nom'], $_POST['plataforma'], $_POST['qualificacio'], $_POST['temporadesPrevistes']);
-	if ($g_e->crearSerie()) {
-		echo '
-			<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:green;border-radius:10px">
-				La sèrie ha estat guardada correctament.
-			</div>
-			<br>
-			<br>
-			<center><a href="index.html">Tornar al menú principal</a></center>
-		';
-	} else {
-		echo '
-		<div style="font-size:1.4rem;font-weight:bold;text-align:center;border:1px solid black;margin-left:350px;margin-right:350px;padding:50px;background-color:grey;border-radius:10px">
-			La sèrie que vols afegir ja existeix. Si us plau, escull una altra.
-		</div>
-		<br>
-		<br>
-		<center><a href="index.html">Tornar al menú principal</a></center>
-  ';
-}
+
+
+
+

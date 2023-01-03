@@ -8,26 +8,33 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1><strong>DADES D'UNA SÈRIE</strong></h1>
-  <p>
-    Per mostrar les dades d'una sèrie, tria-la de la llista.
-  </p>
-  <br>
-  <br>
-  <form class="dadesSerie-form" action="gestioVista.php" method="post">
-    <label for="nomSerie">Equip:</label>
-    <!-- aquí s'ha de connectar amb la nostra base de dades -->
-    <select id="plataforma" name="serie" form="plataformaForm">
-      <option value="netflix">Netflix</option>
-      <option value="amazonPrime">Amazon Prime</option>
-      <option value="disney">Disney+</option>
-      <option value="hbo">HBO</option>
-    </select>
+  <center>
+    <h1><strong>DADES D'UNA SÈRIE</strong></h1>
+    <p>
+      Per mostrar les dades d'una sèrie, tria-la de la llista.
+    </p>
     <br>
     <br>
-    <input type="submit" value="Mostrar">
-  </form>
-  <br>
-  <a href="index.html">Torna al menú principal</a>
+    <form class="dadesSerie-form" action="gestioVista.php" method="post">
+      <table>
+        <tr>
+            <td>Equip: </td>
+            <td>
+              <?php
+                include_once("tcontrol.php");
+                $c = new TControl();
+                $res = $c->llistatSeries(); 
+                echo ($res);
+              ?>
+            </td>
+        </tr>
+      </table>
+      <br>
+      <br>
+      <input type="submit" name="opcio" value="Dades Sèrie">
+    </form>
+    <br>
+    <a href="index.html">Torna al menú principal</a>
+  </center>
 </body>
 </html>
