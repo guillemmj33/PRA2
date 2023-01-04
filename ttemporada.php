@@ -53,7 +53,7 @@ class Ttemporada
     return $res;
   }
 
-/*   public function existeix_temporada()
+  public function existeix_temporada()
   {
     $res = false;
     if (
@@ -68,7 +68,7 @@ class Ttemporada
       }
     }
     return $res;
-  } */
+  }
 
 /*   //comprovar si el número que es genera és més petit que temporadesPrevistes de la taula sèrie
   public function max_temporades()
@@ -90,17 +90,19 @@ class Ttemporada
  */
   public function crearTemporada()
   {
-  $res = false;
-    if (
-      $this->abd->consulta_SQL("INSERT INTO temporada
+    $res = false;
+    if (!($this->existeix_temporada())) { //si efectivament no hi és, s'insereix
+      if (
+        $this->abd->consulta_SQL("INSERT INTO temporada
   VALUES (" .
-        $this->abd->escapar_dada($this->temporada) . ",'" .
-        $this->abd->escapar_dada($this->nomSerie) . "'," .
-        $this->abd->escapar_dada($this->quantitatCapitols) . "," .
-        $this->abd->escapar_dada($this->qualificacio) . ")")
-    ) {
-      $res = true;
+          $this->abd->escapar_dada($this->temporada) . ",'" .
+          $this->abd->escapar_dada($this->nomSerie) . "'," .
+          $this->abd->escapar_dada($this->quantitatCapitols) . "," .
+          $this->abd->escapar_dada($this->qualificacio) . ")")
+      ) {
+        $res = true;
+      }
+      return $res;
     }
-    return $res;
   }
 }
