@@ -57,9 +57,9 @@ class TControl
 	}
 
 	/******************** APARTAT E ********************/
-	public function dadesSerie ()
+	public function dadesSerie ($nom, $plataforma, $qualificacio, $temporadesPrevistes)
 	{
-		$ll = new Tserie ("","",0, 0, $this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
+		$ll = new Tserie ("","",0, 0,$this->servidor, $this->usuari, $this->paraula_pas, $this->nom_bd);
 		$res = $ll->llistatDadesSerie();
 		return $res;
 	}

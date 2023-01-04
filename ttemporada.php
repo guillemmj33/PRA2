@@ -16,16 +16,15 @@ class Ttemporada
     $this->nomSerie = $v_nomSerie;
     $this->quantitatCapitols = $v_quantitatCapitols;
     $this->qualificacio = $v_qualificacio;
-    $var_abd = new TAccesbd($servidor,$usuari,$paraula_pas,$nom_bd);
+    $var_abd = new TAccesbd($servidor, $usuari, $paraula_pas, $nom_bd);
     $this->abd = $var_abd;
     $this->abd->connectar_BD();
   }
 
   function __destruct()
   {
-    if (isset($this->abd))
-    {
-    unset($this->abd);
+    if (isset($this->abd)) {
+      unset($this->abd);
     }
   }
 
@@ -41,7 +40,7 @@ class Ttemporada
         $qualificacio = $this->abd->consulta_dada('qualificacio');
         $temporadesPrevistes = $this->abd->consulta_dada('temporadesPrevistes');
 
-        $res = $res . "<option value='" . $nom . "'>" . $nom . " - " . $plataforma . " - " . $qualificacio . " - " . $temporadesPrevistes . "</option>";
+        $res = $res . "<option value='" . $nom . "'>" . $nom . " - " . $plataforma . " - Qualificació " . $qualificacio . " - Temp.Prev. " . $temporadesPrevistes . "</option>";
 
         $fila = $this->abd->consulta_fila();
       }
@@ -52,57 +51,58 @@ class Ttemporada
     }
     return $res;
   }
-
-  public function existeix_temporada()
+}
+  /* public function existeix_temporada()
   {
-    $res = false;
-    if (
-      $this->abd->consulta_SQL("
-    select count(*) as quants
-    from temporada
-    where temporada = '" .
-        $this->abd->escapar_dada($this->temporada) . "'")
-    ) {
-      if ($this->abd->consulta_fila()) {
-        $res = ($this->abd->consulta_dada('quants') > 0);
-      }
-    }
-    return $res;
+  $res = false;
+  if (
+  $this->abd->consulta_SQL("
+  select count(*) as quants
+  from temporada
+  where temporada = '" .
+  $this->abd->escapar_dada($this->temporada) . "'")
+  ) {
+  if ($this->abd->consulta_fila()) {
+  $res = ($this->abd->consulta_dada('quants') > 0);
   }
+  }
+  return $res;
+  } */
 
-/*   //comprovar si el número que es genera és més petit que temporadesPrevistes de la taula sèrie
+  /*   //comprovar si el número que es genera és més petit que temporadesPrevistes de la taula sèrie
   public function max_temporades()
   {
-    $res = false;
-    if (
-      $this->abd->consulta_SQL("
-    select count(*) as quants
-    from serie
-    where temporadesPrevistes = '" .
-        $this->abd->escapar_dada($this->temporadesPrevistes) . "'")
-    ) {
-      if ($this->abd->consulta_fila()) {
-        $res = ($this->abd->consulta_dada('quants') > 0);
-      }
-    }
-    return $res;
+  $res = false;
+  if (
+  $this->abd->consulta_SQL("
+  select count(*) as quants
+  from serie
+  where temporadesPrevistes = '" .
+  $this->abd->escapar_dada($this->temporadesPrevistes) . "'")
+  ) {
+  if ($this->abd->consulta_fila()) {
+  $res = ($this->abd->consulta_dada('quants') > 0);
   }
- */
-  public function crearTemporada()
+  }
+  return $res;
+  }
+  */
+  /* public function crearTemporada()
   {
-    $res = false;
-    if (!($this->existeix_temporada())) { //si efectivament no hi és, s'insereix
-      if (
-        $this->abd->consulta_SQL("INSERT INTO temporada
+  $res = false;
+  if (!($this->existeix_temporada())) { //si efectivament no hi és, s'insereix
+  if (
+  $this->abd->consulta_SQL("INSERT INTO temporada
   VALUES (" .
-          $this->abd->escapar_dada($this->temporada) . ",'" .
-          $this->abd->escapar_dada($this->nomSerie) . "'," .
-          $this->abd->escapar_dada($this->quantitatCapitols) . "," .
-          $this->abd->escapar_dada($this->qualificacio) . ")")
-      ) {
-        $res = true;
-      }
-      return $res;
-    }
+  $this->abd->escapar_dada($_POST["temporada"]) . ",'" .
+  $this->abd->escapar_dada($_POST["temporades"]) . "'," .
+  $this->abd->escapar_dada($this->quantitatCapitols) . "," .
+  $this->abd->escapar_dada($_POST["qualificacio"]) . ")")
+  ) {
+  $res = true;
   }
-}
+  return $res;
+  }
+  }
+  } */
+

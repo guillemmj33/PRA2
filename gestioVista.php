@@ -54,7 +54,7 @@ if (isset($_POST["opcio"]))
 				$quantitatCapitols = $_POST["quantitatCapitols"];
 				$qualificacio = $_POST["qualificacio"];
 				$c = new TControl();
-				$res = $c->crearTemporada($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
+				$res = $c->llistatSeries();
 				if ($res) {
 					echo '
 					<head>
@@ -134,7 +134,7 @@ if (isset($_POST["opcio"]))
 				$quantitatCapitols = $_POST["quantitatCapitols"];
 				$qualificacio = $_POST["qualificacio"];
 				$c = new TControl();
-				$res = $c->dadesSerie($temporada, $nomSerie, $quantitatCapitols, $qualificacio);
+				$res = $c->dadesSerie($nom, $plataforma, $qualificacio, $temporadesPrevistes);
 				if ($res) {
 					echo ('<html>
 					
